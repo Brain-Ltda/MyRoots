@@ -1,0 +1,41 @@
+using UnityEngine;
+
+public class Movimento : MonoBehaviour
+{
+    public float velocidade = 5f; 
+    private float inputHorizontal;
+    private Rigidbody2D rb;
+
+    public Transform PePersonagem;
+    public LayerMask chaoLayer;
+    private bool EstaNoChao;
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody2D não encontrado neste GameObject! Adicione um componente Rigidbody2D para que o movimento funcione.");
+            enabled = false;
+        }
+    }
+
+    void Update()
+    {
+        inputHorizontal = Input.GetAxis("Horizontal");
+
+        if (Input.GetKeyDown(KeyCode.Space) && EstaNoChao)
+        {
+            rb.AddForce(Vector2.up * 600);
+        }
+        EstaNoChao = Physics2D.OverlapCircle(PePersonagem.position, 0.2f, chaoLayer);
+    }
+
+    void FixedUpdate()
+    {
+        if (rb != null)
+        {
+            rb.linearVelocity = new Vector2(inputHorizontal * velocidade, rb.linearVelocity.y);
+        }
+    }
+}
