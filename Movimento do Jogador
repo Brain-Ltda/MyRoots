@@ -9,9 +9,16 @@ public class Movimento : MonoBehaviour
     public Transform PePersonagem;
     public LayerMask chaoLayer;
     private bool EstaNoChao;
+    private int MoverHash = Animator.StringToHash("Movendo");
+    private SpriteRenderer spriterenderer;
+    private Animator animator;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        animator = GetComponent<Animator>();
+
+        spriterenderer = GetComponent<SpriteRenderer>();
 
         if (rb == null)
         {
@@ -29,6 +36,17 @@ public class Movimento : MonoBehaviour
             rb.AddForce(Vector2.up * 600);
         }
         EstaNoChao = Physics2D.OverlapCircle(PePersonagem.position, 0.2f, chaoLayer);
+
+        animator.SetBool(MoverHash, inputHorizontal != 0);
+
+        if(inputHorizontal > 0)
+        {
+            spriterenderer.flipX = false;
+        }
+        else if(inputHorizontal < 0)
+        {
+            spriterenderer.flipX = true;
+        }
     }
 
     void FixedUpdate()
