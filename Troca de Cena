@@ -1,0 +1,19 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class sceneManager : MonoBehaviour
+{
+      
+    public string mapaTimeTravel;
+     
+
+    void Update()
+    {
+
+        if (Input.GetKeyDown(KeyCode.H)){
+
+            SceneManager.LoadScene("mapaTimeTravel");
+
+        }
+        
+    }
+}
